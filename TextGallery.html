@@ -1,0 +1,181 @@
+<style>
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  background: #D2D2D2;
+  min-height:246px;
+  max-height:246px;
+  height:246px !important;
+}
+/*DELETE THESE TO DISABLE THE QUOTE FEATURE*/
+.slideshow-container .quote::before{
+  content: '"'
+}
+.slideshow-container .quote::after{
+  content: '"'
+}
+/* Slides */
+.slideshow-container .mySlides {
+  display: none;
+  padding: 70px 80px 90px 80px;
+  text-align: center;
+  max-height: 86px;
+
+}
+.slideshow-container .mySlides p {
+      font-family: "Helvetica Neue",Arial,sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+/*CHANGE AND CONTENT THE FONT HERE */
+.slideshow-container .prev::before{
+  font-family: 'squarespace-ui-font';
+    font-style: normal;
+    speak: none;
+    font-weight: normal;
+    font-size:49px;
+    -webkit-font-smoothing: antialiased;
+    content: "\E02C";
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+/*CHANGE THE FONT AND CONTENT HERE */
+.slideshow-container .next::before{
+  font-family: 'squarespace-ui-font';
+    font-style: normal;
+    speak: none;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    content: "\E02D";
+    text-align: center;
+    font-size:49px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Next & previous buttons */
+.slideshow-container .prev, .slideshow-container  .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -30px;
+  padding: 16px;
+  color: #000;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.slideshow-container .next {
+  position: absolute;
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through 
+.slideshow-container .prev:hover, .slideshow-container  .next:hover {
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+}*/
+
+
+.slideshow-container .author {font-style: italic !important;}
+</style>
+<div class="slideshow-container">
+<div class="slideshow-container">
+<div class="mySlides">
+  <p class="quote">Here is a quote</p>
+  <p class="author">- some guy</p>
+</div>
+
+<div class="mySlides">
+  <p class="quote">Here is another one</p>
+  <p class="author">- someone else</p>
+</div>
+
+<div class="mySlides">
+  <p class="quote">Here is a long reptitive one. Here is a long reptitive one. Here is a long reptitive one. Here is a long reptitive one. Here is a long reptitive one.Here is a long reptitive one.</p>
+  <p class="author">- me </p>
+</div>
+
+<!-- removed to match site style
+<div class="dot-container">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+</div>-->
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+<script>
+  var slideIndex = 1;
+jQuery(document).ready(function($) {
+    showSlides(slideIndex);
+    setTimeout(function(){
+      setInterval(present, 7000);
+    }, 3000)
+});
+
+function present(){
+  //console.log("present slide");
+  plusSlides(1);
+}
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+async function showSlides(n) {
+  /*var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}*/
+
+  var i;
+  var transtime = 600
+  var fadeOutEffect = function(){
+    return $(".mySlides").fadeOut(transtime);
+  }
+  var slides = $(".mySlides");
+  var dots = $(".dot");
+  //console.log(slides, dots)
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  $.when( fadeOutEffect() ).done(function() {
+    //console.log("promise done")
+  for (i = 0; i < slides.length; i++) {
+      if(i == slideIndex -1){
+        $(slides[i]).fadeIn(transtime);
+      }
+  }
+  });
+
+ 
+/*console.log("end fadein")
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  //slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";*/
+}
+
+</script>
